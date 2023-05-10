@@ -28,6 +28,9 @@ def browse(
     filter: Annotated[str, typer.Option(help="filters")],
     amount: Annotated[int, typer.Option(help="The max amount of posts to show")] = 50,
 ) -> None:
+    """
+    Browse a subreddit, and returns a table of posts
+    """
     currSub = reddit.subreddit(subreddit)
     subGen: Submission = (
         currSub.new(limit=amount)
@@ -45,6 +48,9 @@ def search(
     search: Annotated[str, typer.Option(help="The search term to look for")],
     amount: Annotated[int, typer.Option(help="The max amount of posts to show")] = 50,
 ) -> None:
+    """
+    Search for a search term within the given subreddit
+    """
     currSub = reddit.subreddit(parseSubreddit(subreddit)).search(search, limit=amount)
     console.print(formatSubredditTable(currSub))
 
@@ -53,6 +59,9 @@ def search(
 def random(
     subreddit: Annotated[str, typer.Option(help="The subreddit name to search")]
 ) -> None:
+    """
+    Gives you a random Reddit post
+    """
     # sometimes it's just a ton of print statements
     currPost = reddit.subreddit(parseSubreddit(subreddit)).random()
     console.print(
@@ -70,3 +79,22 @@ def random(
     console.print(
         f"Created At (UTC): {datetime.fromtimestamp(currPost.created_utc).strftime('%a %d %b %Y %H:%M:%S')}"
     )
+
+
+@app.command()
+def egg_irl(
+    filter: Annotated[str, typer.Option(help="The filter to use")] = "new",
+    amount: Annotated[int, typer.Option(help="The amount of posts to get")] = 50,
+) -> None:
+    """
+    Returns a set amount of posts from r/egg_irl. Lol this is a joke.
+    """
+    currSub = reddit.subreddit("egg_irl")
+
+    currFilter = currSub.comments.new(limit=amount)
+    if filter in ["hot"]:
+        currFilter = currSub.comments.hot(limit=amount)
+    elif filter in ["top"]:
+        currFilter = currSub.comments.top(limit=amount)
+
+    console.print(formatSubredditTable(currSub))

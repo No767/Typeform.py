@@ -26,6 +26,9 @@ console = Console()
 def search(
     redditor: Annotated[str, typer.Option(help="The name of the redditor to search")]
 ) -> None:
+    """
+    Provides info about the given Redditor
+    """
     currUser = reddit.redditor(parseRedditor(redditor))
     console.print(f"[bold][blue]{currUser.name}[/bold] - {currUser.icon_img}\n")
     console.print(f"Karma (total): {currUser.link_karma + currUser.comment_karma}")

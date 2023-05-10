@@ -27,6 +27,9 @@ def redditor(
     redditor: Annotated[str, typer.Option(help="The name of the redditor to search")],
     filter: Annotated[str, typer.Option(help="The filter to use")] = "new",
 ) -> None:
+    """
+    Searches for the given Redditor's comments
+    """
     # Jerry said not to code golf so...
 
     currUser = reddit.redditor(parseRedditor(redditor))
@@ -59,6 +62,9 @@ def posts(
     ],
     filter: Annotated[str, typer.Option(help="The filter to use")] = "new",
 ) -> None:
+    """
+    Given a post ID, searches for any comments and provides a tree of comments
+    """
     currPost = reddit.submission(id=id)
 
     currFilter = "new"
