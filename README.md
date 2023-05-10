@@ -78,11 +78,6 @@ Further details will be provided in the Piazza post. Will be updated with the ne
 **Q: Why do I keep on getting a `ModuleNotFound` error?**
 A: More than likely you forgot to install the libraries needed. Just run `pip install -r requirements.txt` to install it.
 
-## Platforms supported:
-- Linux (Works. Natively developed on Fedora 38 and Ubuntu 20.04)
-- Windows (untested, but should work)
-- MacOS (untested, but should work)
-
 ## License
 
 MIT (mainly I don't want to have to deal with copyright)
