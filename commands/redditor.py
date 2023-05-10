@@ -13,7 +13,10 @@ from utils import parseRedditor
 
 load_dotenv()
 
-app = typer.Typer(rich_markup_mode="rich")
+app = typer.Typer(
+    help="Commands for searching and obtaining Redditors (users)",
+    rich_markup_mode="rich",
+)
 reddit = praw.Reddit(
     client_id=os.getenv("REDDIT_ID"),
     client_secret=os.getenv("REDDIT_SECRET"),

@@ -13,7 +13,10 @@ from utils import formatSubredditTable, parseSubreddit
 
 load_dotenv()
 
-app = typer.Typer(rich_markup_mode="rich")
+app = typer.Typer(
+    help="Commands for browsing, and obtaining posts from subreddits",
+    rich_markup_mode="rich",
+)
 reddit = praw.Reddit(
     client_id=os.getenv("REDDIT_ID"),
     client_secret=os.getenv("REDDIT_SECRET"),
