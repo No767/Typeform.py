@@ -71,7 +71,7 @@ And then just run the script as per usual
 
 ### Replit
 
-Further details will be provided in the Piazza post. Will be updated with the needed contents later
+Open up the Replit provided in the Piazza link, and it should automatically install all of the stuff for you
 
 ## Troubleshooting
 
