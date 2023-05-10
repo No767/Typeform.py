@@ -15,15 +15,23 @@ def formatSubredditTable(subreddit: Subreddit) -> Table:
     Returns:
         Table: The formatted table
     """
-    table = Table()
+    table = Table(expand=True)
     table.add_column("Title")
-    table.add_column("Flair")
+    table.add_column("Author")
+    table.add_column("User Flair")
+    table.add_column("Upvotes (w/ Ratio)")
+    table.add_column("NSFW?")
+    table.add_column("# of Comments")
     table.add_column("URL")
     table.add_column("Date Created")
     for posts in subreddit:
         table.add_row(
             posts.title,
+            posts.author.name,
             posts.author_flair_text or "None",
+            f"{posts.score} ({posts.upvote_ratio}%)",
+            f"{posts.over_18}",
+            f"{posts.num_comments}",
             posts.url,
             datetime.fromtimestamp(posts.created_utc).strftime("%a %d %b %Y %H:%M:%S"),
         )
@@ -45,3 +53,19 @@ def parseSubreddit(subreddit: Union[str, None]) -> str:
     if subreddit is None:
         return "all"
     return re.sub(r"^[r/]{2}", "", subreddit, re.IGNORECASE)
+
+
+# U know i might use this in Kumiko...
+# Someone remind me to port this over
+def parseRedditor(redditor: Union[str, None]) -> str:
+    """Parses a Redditor's name to be used in PRAW's redditor lookup
+
+    Args:
+        redditor (Union[str, None]): Redditor name to parse
+
+    Returns:
+        str: Parsed subreddit name
+    """
+    if redditor is None:
+        return "all"
+    return re.sub(r"^[u/]{2}", "", redditor, re.IGNORECASE)

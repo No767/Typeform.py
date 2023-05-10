@@ -14,6 +14,9 @@ A basic and simple Reddit CLI script meant for browsing [Reddit](https://reddit.
 - [ ] Improved TUI using [Textual](https://textual.textualize.io/)
 - [ ] Unit testing (Test Python 3.8 - 3.11)
 - [ ] Making the whole project properly statically typed (check using [Pyright](https://pypi.org/project/pyright/))
+- [ ] More commands
+- [ ] Global PRAW session management system
+- [ ] Live Updates (Either this will be first developed on Kumiko or Akari, and then ported, or developed here first. The idea comes from here: https://github.com/No767/Kumiko/discussions/266)
 
 ## Running the script
 
@@ -65,6 +68,10 @@ pip install -r requirements.txt
 ```
 
 And then just run the script as per usual
+
+### Replit
+
+Further details will be provided in the Piazza post. Will be updated with the needed contents later
 
 ## Troubleshooting
 
