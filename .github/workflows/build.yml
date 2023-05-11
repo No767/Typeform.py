@@ -28,11 +28,17 @@ jobs:
         if: runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@v1
 
-      - name: Install Clang and GCC Toolchains
+      - name: Set up GCC
+        if: runner.os == 'Linux'
+        uses: egor-tensin/setup-gcc@v1
+        with:
+          version: latest
+          platform: x64
+
+      - name: Install C/C++ Build Dependencies
         if: runner.os == 'Linux'
         run: |
-          sudo apt-get install build-essentials g++ clang libffi-dev libssl-dev \
-          curl wget python3-dev ccache
+          sudo apt-get install libffi-dev libssl-dev ccache
       
       - name: Set up Python
         id: setup-python
