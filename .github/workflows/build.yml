@@ -31,7 +31,7 @@ jobs:
       - name: Install Clang and GCC Toolchains
         if: runner.os == 'Linux'
         run: |
-          apt-get install build-essentials g++ clang libffi-dev libssl-dev \
+          sudo apt-get install build-essentials g++ clang libffi-dev libssl-dev \
           curl wget python3-dev ccache
       
       - name: Set up Python
