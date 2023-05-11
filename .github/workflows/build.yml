@@ -63,10 +63,10 @@ jobs:
 
       - name: Build Binaries
         run: |
-          poetry run python -m nuitka --follow-imports main.py
+          poetry run python -m nuitka --follow-imports --standalone main.py
 
       - name: Upload Binaries
         uses: actions/upload-artifact@v3
         with: 
           name: typeform-${{ runner.os }}-${{ matrix.version }}
-          path: '**/*[.exe|.bin]'
+          path: './*[.exe|.bin|.cmd]'
