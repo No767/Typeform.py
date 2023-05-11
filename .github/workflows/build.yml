@@ -1,0 +1,66 @@
+name: Build Binaries
+
+on:
+  push:
+    branches:
+      - main
+    
+  pull_request:
+    branches:
+      - main
+
+jobs: 
+  Test:
+    name: Build Binaries (${{ matrix.version }}, ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [3.8, 3.9, '3.10', '3.11']
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install MSVC Toolchain
+        if: runner.os == "Windows"
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Install Clang and GCC Toolchains
+        if: runner.os == "Linux"
+        run: |
+          apt-get install build-essentials g++ clang libffi-dev libssl-dev \
+          curl wget python3-dev ccache
+      
+      - name: Set up Python
+        id: setup-python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.version }}
+
+      - name: Set up Poetry
+        uses: Gr1N/setup-poetry@v8
+
+      - name: Cache Poetry
+        id: cache-poetry
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: ${{ runner.os }}-poetry-build-${{ matrix.version }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install Poetry Dependencies
+        if: steps.cache-poetry.outputs.cache-hit != 'true'
+        run: |
+          poetry install --with build
+
+      - name: Build Binaries
+        run: |
+          python -m nuikta --follow-imports main.py
+
+      - name: Upload Binaries
+        uses: actions/upload-artifact@v3
+        with: 
+          name: typeform-${{ runner.os }}-${{ matrix.version }}
+          path: '**/*[.exe|.bin]'
