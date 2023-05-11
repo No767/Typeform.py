@@ -28,7 +28,7 @@ jobs:
         if: runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@v1
 
-      - name: Set up GCC
+      - name: Install GCC Toolchain
         if: runner.os == 'Linux'
         uses: egor-tensin/setup-gcc@v1
         with:
@@ -63,7 +63,7 @@ jobs:
 
       - name: Build Binaries
         run: |
-          python -m nuikta --follow-imports main.py
+          poetry run python -m nuikta --follow-imports main.py
 
       - name: Upload Binaries
         uses: actions/upload-artifact@v3
