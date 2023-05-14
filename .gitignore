@@ -26,10 +26,13 @@ share/python-wheels/
 *.egg
 MANIFEST
 
+# Nuikta's build and dist folders
 *.build/
 *.dist/
-# ENV files
-*.env
+*.onefile-build/
+# PRAW's ini
+praw.ini
+
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

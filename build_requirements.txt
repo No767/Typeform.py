@@ -1,0 +1,4 @@
+praw
+typer[all]
+nuikta
+python-dotenv

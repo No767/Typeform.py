@@ -476,7 +476,7 @@ cli = ["click (>=5.0)"]
 name = "pyyaml"
 version = "6.0"
 description = "YAML parser and emitter for Python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -768,4 +768,4 @@ cffi = ["cffi (>=1.11)"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<4.0"
-content-hash = "817b0ca0a60a9edbdaae1cd8bf95be1cda8d15e4e3d38629c9836e242e205a7d"
+content-hash = "0e157a34fb963be56c2e5dac92ccc1feacc3048374e2f09992b2e409916e068d"
