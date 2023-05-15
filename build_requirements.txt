@@ -2,3 +2,4 @@ praw
 typer[all]
 nuitka
 python-dotenv
+chardet
