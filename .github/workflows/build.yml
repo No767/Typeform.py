@@ -11,7 +11,7 @@ on:
 
 jobs: 
   Test:
-    name: Build Binaries (${{ matrix.version }}, ${{ matrix.os }})
+    name: Build (${{ matrix.version }}, ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -90,7 +90,7 @@ jobs:
 
       - name: Build Binaries
         run: |
-          poetry run python -m nuitka --follow-imports ./src/main.py
+          python -m nuitka --follow-imports ./src/main.py
 
       - name: Upload Binaries
         uses: actions/upload-artifact@v3
