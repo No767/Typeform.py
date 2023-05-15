@@ -19,6 +19,13 @@ jobs:
       matrix:
         version: [3.8, 3.9, '3.10', '3.11']
         os: [ubuntu-latest, windows-latest]
+        include:
+        - os: ubuntu-latest
+          path: ~/.cache/pip
+        - os: macos-latest
+          path: ~/Library/Caches/pip
+        - os: windows-latest
+          path: ~\AppData\Local\pip\Cache
 
     steps:
       - name: Checkout
@@ -55,38 +62,20 @@ jobs:
 #         with:
 #           path: ~/.cache/pypoetry/virtualenvs
 #           key: ${{ runner.os }}-poetry-build-${{ matrix.version }}-${{ hashFiles('**/poetry.lock') }}
-        
-      - name: Cache Pip (Linux)
+      - name: Cache pip
+        id: cache-pip
         uses: actions/cache@v3
-        if: startsWith(runner.os, 'Linux')
         with:
-          path: ~/.cache/pip
+          path: ${{ matrix.path }}
           key: ${{ runner.os }}-pip-${{ hashFiles('**/build_requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: Cache Pip (MacOS)
-        uses: actions/cache@v3
-        if: startsWith(runner.os, 'macOS')
-        with:
-          path: ~/Library/Caches/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/build_requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
 
-      - name: Cache Pip (Windows)
-        uses: actions/cache@v3
-        if: startsWith(runner.os, 'Windows')
-        with:
-          path: ~\AppData\Local\pip\Cache
-          key: ${{ runner.os }}-pip-${{ hashFiles('**build_/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-#       - name: Install Poetry Dependencies
-#         if: steps.cache-poetry.outputs.cache-hit != 'true'
-#         run: |
-#           poetry install --with build
+      - name: Install Pip Dependencies
+        if: steps.cache-pip.outputs.cache-hit != 'true'
+        run: |
+          pip install -r build_requirements.txt
 
       - name: Build Binaries
         run: |
