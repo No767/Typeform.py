@@ -1,4 +1,4 @@
 praw
 typer[all]
-nuikta
+nuitka
 python-dotenv
