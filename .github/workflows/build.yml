@@ -46,20 +46,47 @@ jobs:
         with:
           python-version: ${{ matrix.version }}
 
-      - name: Set up Poetry
-        uses: Gr1N/setup-poetry@v8
+#       - name: Set up Poetry
+#         uses: Gr1N/setup-poetry@v8
 
-      - name: Cache Poetry
-        id: cache-poetry
+#       - name: Cache Poetry
+#         id: cache-poetry
+#         uses: actions/cache@v3
+#         with:
+#           path: ~/.cache/pypoetry/virtualenvs
+#           key: ${{ runner.os }}-poetry-build-${{ matrix.version }}-${{ hashFiles('**/poetry.lock') }}
+        
+      - name: Cache Pip (Linux)
         uses: actions/cache@v3
+        if: startsWith(runner.os, 'Linux')
         with:
-          path: ~/.cache/pypoetry/virtualenvs
-          key: ${{ runner.os }}-poetry-build-${{ matrix.version }}-${{ hashFiles('**/poetry.lock') }}
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/build_requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
-      - name: Install Poetry Dependencies
-        if: steps.cache-poetry.outputs.cache-hit != 'true'
-        run: |
-          poetry install --with build
+      - name: Cache Pip (MacOS)
+        uses: actions/cache@v3
+        if: startsWith(runner.os, 'macOS')
+        with:
+          path: ~/Library/Caches/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/build_requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Cache Pip (Windows)
+        uses: actions/cache@v3
+        if: startsWith(runner.os, 'Windows')
+        with:
+          path: ~\AppData\Local\pip\Cache
+          key: ${{ runner.os }}-pip-${{ hashFiles('**build_/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+#       - name: Install Poetry Dependencies
+#         if: steps.cache-poetry.outputs.cache-hit != 'true'
+#         run: |
+#           poetry install --with build
 
       - name: Build Binaries
         run: |
