@@ -3,3 +3,4 @@ typer[all]
 nuitka
 python-dotenv
 chardet
+charset_normalizer==2.1.1
