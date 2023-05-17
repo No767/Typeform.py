@@ -1,6 +1,5 @@
 # import yaml
 import praw
-from charset_normalizer import md__mypyc
 from charset_normalizer import md
 # See https://stackoverflow.com/a/74540217
 
